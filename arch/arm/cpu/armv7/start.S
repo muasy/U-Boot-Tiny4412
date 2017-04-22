@@ -49,6 +49,8 @@ save_boot_params_ret:
 	beq	switch_to_hypervisor
 switch_to_hypervisor_ret:
 #endif
+
+	
 	/*
 	 * disable interrupts (FIQ and IRQ), also set the cpu to SVC32 mode,
 	 * except if in HYP mode already
@@ -60,6 +62,10 @@ switch_to_hypervisor_ret:
 	orrne	r0, r0, #0x13		@ set SVC mode
 	orr	r0, r0, #0xc0		@ disable FIQ and IRQ
 	msr	cpsr,r0
+
+	bl led_config
+	bl led_off_all
+	bl led_on_1
 
 /*
  * Setup vector:
@@ -86,6 +92,7 @@ switch_to_hypervisor_ret:
 #endif
 
 	bl	_main
+
 
 /*------------------------------------------------------------------------------*/
 
@@ -293,3 +300,77 @@ ENTRY(cpu_init_crit)
 	b	lowlevel_init		@ go setup pll,mux,memory
 ENDPROC(cpu_init_crit)
 #endif
+
+	.globl led_config
+led_config:
+	ldr r0, =0x110002E0 	@ GPM4CON地址
+	ldr r1, [r0]			
+	bic r1, r1, #0xFF00		@ 清除高8位
+	bic r1, r1, #0x00FF		@ 清除低8位
+	orr r1, r1, #0x1100		@ 配置高8位位输出模式
+	orr r1, r1, #0x0011		@ 配置低8位为输出模式 
+	str r1, [r0]	
+	
+	bx lr
+
+	.globl led_off_all
+led_off_all:
+	ldr r0, =0x110002E4		@ GMP4DAT地址
+	ldr r1, [r0]
+	orr r1, r1, #0x0F
+	str r1, [r0]
+
+	bx lr
+		
+	.globl led_on_1
+led_on_1:
+	ldr r0, =0x110002E4		@ GMP4DAT地址
+	ldr r1, [r0]
+	bic r1, r1, #0x01
+	str r1, [r0]
+
+	bx lr					@ 函数返回
+
+	.globl led_on_2
+led_on_2:
+	ldr r0, =0x110002E4		@ GMP4DAT地址
+	ldr r1, [r0]
+	bic r1, r1, #0x02
+	str r1, [r0]
+
+	bx lr					@ 函数返回
+
+	.globl led_on_3
+led_on_3:
+	ldr r0, =0x110002E4		@ GMP4DAT地址
+	ldr r1, [r0]
+	bic r1, r1, #0x04
+	str r1, [r0]
+
+	bx lr					@ 函数返回
+
+	.globl led_on_4
+led_on_4:
+	ldr r0, =0x110002E4		@ GMP4DAT地址
+	ldr r1, [r0]
+	bic r1, r1, #0x08
+	str r1, [r0]
+
+	bx lr					@ 函数返回
+
+	.globl bsp_delay
+bsp_delay:
+	ldr r0, =0x8FFFFF
+
+loop:
+	sub r0, r0, #0x01
+	cmp r0, #0x00
+	bne loop 
+	
+	bx lr
+
+
+		
+
+
+

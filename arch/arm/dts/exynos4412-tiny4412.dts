@@ -1,0 +1,30 @@
+/*
+ * Odroid-U3/X2 board device tree source
+ *
+ * Copyright (c) 2014 Samsung Electronics Co., Ltd.
+ *		http://www.samsung.com
+ *
+ * SPDX-License-Identifier:	GPL-2.0+
+ */
+
+/dts-v1/;
+#include "exynos4412.dtsi"
+
+/ {
+	model = "Tiny4412 based on Exynos4412";
+	compatible = "samsung,tiny4412", "samsung,exynos4412";
+
+	chosen {
+		stdout-path = "serial0";
+	};
+
+	aliases {
+		serial0 = "/serial@13800000";
+		console = "/serial@13800000";
+	};
+
+	serial0:serial@13810000 {
+		status = "okay";
+	};
+
+};

@@ -246,6 +246,8 @@ ifeq ($(HOSTARCH),$(ARCH))
 CROSS_COMPILE ?=
 endif
 
+CROSS_COMPILE ?= arm-linux-
+
 KCONFIG_CONFIG	?= .config
 export KCONFIG_CONFIG
 
@@ -837,8 +839,9 @@ cmd_pad_cat = $(cmd_objcopy) && $(append) || rm -f $@
 cfg: u-boot.cfg
 
 quiet_cmd_cfgcheck = CFGCHK  $2
-cmd_cfgcheck = $(srctree)/scripts/check-config.sh $2 \
-		$(srctree)/scripts/config_whitelist.txt $(srctree)
+cmd_cfgcheck =
+#cmd_cfgcheck = $(srctree)/scripts/check-config.sh $2 \
+#		$(srctree)/scripts/config_whitelist.txt $(srctree)
 
 all:		$(ALL-y)
 ifeq ($(CONFIG_DM_I2C_COMPAT)$(CONFIG_SANDBOX),y)

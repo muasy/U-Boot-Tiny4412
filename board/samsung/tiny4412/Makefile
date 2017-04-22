@@ -8,7 +8,7 @@ ifdef CONFIG_SPL_BUILD
 # necessary to create built-in.o
 obj- := __dummy__.o
 
-hostprogs-y := tools/mkorigenspl
+hostprogs-y := tools/mktiny4412spl
 always := $(hostprogs-y)
 
 # omit -O2 option to suppress
@@ -16,7 +16,7 @@ always := $(hostprogs-y)
 #
 # TODO:
 # Fix the root cause in tools/mkorigenspl.c and delete the following work-around
-$(obj)/tools/mkorigenspl: HOSTCFLAGS:=$(filter-out -O2,$(HOSTCFLAGS))
+$(obj)/tools/mktiny4412spl: HOSTCFLAGS:=$(filter-out -O2,$(HOSTCFLAGS))
 else
-obj-y	+= origen.o
+obj-y	+= tiny4412.o
 endif

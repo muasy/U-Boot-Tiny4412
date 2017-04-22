@@ -82,12 +82,17 @@ ENTRY(_main)
 #else
 	bic	sp, sp, #7	/* 8-byte alignment for ABI compliance */
 #endif
+
+	bl led_on_2
+
 	mov	r0, sp
 	bl	board_init_f_alloc_reserve
 	mov	sp, r0
 	/* set up gd here, outside any C code */
 	mov	r9, r0
 	bl	board_init_f_init_reserve
+
+	bl led_on_3
 
 	mov	r0, #0
 	bl	board_init_f

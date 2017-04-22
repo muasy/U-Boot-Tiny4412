@@ -218,8 +218,9 @@ int do_lowlevel_init(void)
 #ifdef CONFIG_DEBUG_UART
 #if (defined(CONFIG_SPL_BUILD) && defined(CONFIG_SPL_SERIAL_SUPPORT)) || \
     !defined(CONFIG_SPL_BUILD)
-		exynos_pinmux_config(PERIPH_ID_UART3, PINMUX_FLAG_NONE);
+		exynos_pinmux_config(PERIPH_ID_UART0, PINMUX_FLAG_NONE);
 		debug_uart_init();
+		printascii("USART INIT .......... OK!");
 #endif
 #endif
 		mem_ctrl_init(actions & DO_MEM_RESET);
