@@ -220,7 +220,7 @@ int do_lowlevel_init(void)
     !defined(CONFIG_SPL_BUILD)
 		exynos_pinmux_config(PERIPH_ID_UART0, PINMUX_FLAG_NONE);
 		debug_uart_init();
-		printascii("USART INIT .......... OK!");
+		printascii("[SPL] USART INIT .......... OK!\n");
 #endif
 #endif
 		mem_ctrl_init(actions & DO_MEM_RESET);

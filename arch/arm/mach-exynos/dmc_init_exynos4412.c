@@ -1,5 +1,5 @@
 /*
- * Memory setup for board based on EXYNOS4210
+ * Memory setup for board based on EXYNOS4412
  *
  * Copyright (C) 2013 Samsung Electronics
  * Rajeshwari Shinde <rajeshwari.s@samsung.com>
@@ -26,7 +26,8 @@
 #include <config.h>
 #include <asm/arch/dmc.h>
 #include "common_setup.h"
-#include "exynos4_setup.h"
+#include <debug_uart.h>
+#include "exynos4412_setup.h"
 
 struct mem_timings mem = {
 	.direct_cmd_msr = {
@@ -175,38 +176,60 @@ void mem_ctrl_init(int reset)
 	 * 0: full_sync
 	 */
 	writel(1, ASYNC_CONFIG);
-#ifdef CONFIG_TINY4412
-	/* Interleave: 2Bit, Interleave_bit1: 0x15, Interleave_bit0: 0x7 */
-	writel(APB_SFR_INTERLEAVE_CONF_VAL, EXYNOS4_MIU_BASE +
-		APB_SFR_INTERLEAVE_CONF_OFFSET);
-	/* Update MIU Configuration */
-	writel(APB_SFR_ARBRITATION_CONF_VAL, EXYNOS4_MIU_BASE +
-		APB_SFR_ARBRITATION_CONF_OFFSET);
-#else
-	writel(APB_SFR_INTERLEAVE_CONF_VAL, EXYNOS4_MIU_BASE +
-		APB_SFR_INTERLEAVE_CONF_OFFSET);
-	writel(INTERLEAVE_ADDR_MAP_START_ADDR, EXYNOS4_MIU_BASE +
-		ABP_SFR_INTERLEAVE_ADDRMAP_START_OFFSET);
-	writel(INTERLEAVE_ADDR_MAP_END_ADDR, EXYNOS4_MIU_BASE +
-		ABP_SFR_INTERLEAVE_ADDRMAP_END_OFFSET);
-	writel(INTERLEAVE_ADDR_MAP_EN, EXYNOS4_MIU_BASE +
-		ABP_SFR_SLV_ADDRMAP_CONF_OFFSET);
-#ifdef CONFIG_MIU_LINEAR
-	writel(SLAVE0_SINGLE_ADDR_MAP_START_ADDR, EXYNOS4_MIU_BASE +
-		ABP_SFR_SLV0_SINGLE_ADDRMAP_START_OFFSET);
-	writel(SLAVE0_SINGLE_ADDR_MAP_END_ADDR, EXYNOS4_MIU_BASE +
-		ABP_SFR_SLV0_SINGLE_ADDRMAP_END_OFFSET);
-	writel(SLAVE1_SINGLE_ADDR_MAP_START_ADDR, EXYNOS4_MIU_BASE +
-		ABP_SFR_SLV1_SINGLE_ADDRMAP_START_OFFSET);
-	writel(SLAVE1_SINGLE_ADDR_MAP_END_ADDR, EXYNOS4_MIU_BASE +
-		ABP_SFR_SLV1_SINGLE_ADDRMAP_END_OFFSET);
-	writel(APB_SFR_SLV_ADDR_MAP_CONF_VAL, EXYNOS4_MIU_BASE +
-		ABP_SFR_SLV_ADDRMAP_CONF_OFFSET);
+
+#ifndef CONFIG_TINY4412	
+	#ifdef CONFIG_ORIGEN
+		/* Interleave: 2Bit, Interleave_bit1: 0x15, Interleave_bit0: 0x7 */
+		writel(APB_SFR_INTERLEAVE_CONF_VAL, EXYNOS4_MIU_BASE +
+			APB_SFR_INTERLEAVE_CONF_OFFSET);
+		/* Update MIU Configuration */
+		writel(APB_SFR_ARBRITATION_CONF_VAL, EXYNOS4_MIU_BASE +
+			APB_SFR_ARBRITATION_CONF_OFFSET);
+	#else
+		writel(APB_SFR_INTERLEAVE_CONF_VAL, EXYNOS4_MIU_BASE +
+			APB_SFR_INTERLEAVE_CONF_OFFSET);
+		writel(INTERLEAVE_ADDR_MAP_START_ADDR, EXYNOS4_MIU_BASE +
+			ABP_SFR_INTERLEAVE_ADDRMAP_START_OFFSET);
+		writel(INTERLEAVE_ADDR_MAP_END_ADDR, EXYNOS4_MIU_BASE +
+			ABP_SFR_INTERLEAVE_ADDRMAP_END_OFFSET);
+		writel(INTERLEAVE_ADDR_MAP_EN, EXYNOS4_MIU_BASE +
+			ABP_SFR_SLV_ADDRMAP_CONF_OFFSET);	
+		#ifdef CONFIG_MIU_LINEAR
+			writel(SLAVE0_SINGLE_ADDR_MAP_START_ADDR, EXYNOS4_MIU_BASE +
+				ABP_SFR_SLV0_SINGLE_ADDRMAP_START_OFFSET);
+			writel(SLAVE0_SINGLE_ADDR_MAP_END_ADDR, EXYNOS4_MIU_BASE +
+				ABP_SFR_SLV0_SINGLE_ADDRMAP_END_OFFSET);
+			writel(SLAVE1_SINGLE_ADDR_MAP_START_ADDR, EXYNOS4_MIU_BASE +
+				ABP_SFR_SLV1_SINGLE_ADDRMAP_START_OFFSET);
+			writel(SLAVE1_SINGLE_ADDR_MAP_END_ADDR, EXYNOS4_MIU_BASE +
+				ABP_SFR_SLV1_SINGLE_ADDRMAP_END_OFFSET);
+			writel(APB_SFR_SLV_ADDR_MAP_CONF_VAL, EXYNOS4_MIU_BASE +
+				ABP_SFR_SLV_ADDRMAP_CONF_OFFSET);
+		#endif
+	#endif
 #endif
-#endif
-	/* DREX0 */
+
+	printascii("timingref   ");  printhex8(mem.timingref); 		printascii("\n");
+	printascii("timingrow   ");  printhex8(mem.timingrow); 		printascii("\n");
+	printascii("timingdata  ");  printhex8(mem.timingdata); 	printascii("\n");
+	printascii("timingpower ");  printhex8(mem.timingpower); 	printascii("\n");
+	printascii("zqcontrol   ");  printhex8(mem.zqcontrol); 		printascii("\n");
+	printascii("control0    ");  printhex8(mem.control0); 		printascii("\n");
+	printascii("control1    ");  printhex8(mem.control1); 		printascii("\n");
+	printascii("control2    ");  printhex8(mem.control2); 		printascii("\n");
+	printascii("concontrol  ");  printhex8(mem.concontrol); 	printascii("\n");
+	printascii("prechconfig ");  printhex8(mem.prechconfig); 	printascii("\n");
+	printascii("memcontrol  ");  printhex8(mem.memcontrol); 	printascii("\n");
+	printascii("memconfig0  ");  printhex8(mem.memconfig0); 	printascii("\n");
+	printascii("memconfig1  ");  printhex8(mem.memconfig1); 	printascii("\n");
+	printascii("dll_resync  ");  printhex8(mem.dll_resync); 	printascii("\n");
+	printascii("dll_on      ");  printhex8(mem.dll_on); 		printascii("\n");	
+
+	/* DMC0 */
 	dmc = (struct exynos4_dmc *)samsung_get_base_dmc_ctrl();
 	dmc_init(dmc);
+	
+	/* DMC1 */
 	dmc = (struct exynos4_dmc *)(samsung_get_base_dmc_ctrl()
 					+ DMC_OFFSET);
 	dmc_init(dmc);

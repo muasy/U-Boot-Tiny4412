@@ -34,7 +34,7 @@
 #include <asm/arch/clock.h>
 #include "common_setup.h"
 
-#include "exynos4412_setup.h"
+#include "clock_init_exynos4412.h"
 
 /*
  * system_clock_init: Initialize core clock and bus clock.

@@ -15,6 +15,7 @@
 #include <asm/arch/power.h>
 #include <asm/arch/spl.h>
 #include <asm/arch/spi.h>
+#include <debug_uart.h>
 
 #include "common_setup.h"
 #include "clock_init.h"
@@ -292,6 +293,10 @@ void board_init_f(unsigned long bootflag)
 
 	if (do_lowlevel_init())
 		power_exit_wakeup();
+
+	printascii("[SPL] 测试：\n");
+	writel(123, 0x43E00000);
+	printhex8(readl(0x43E00000));
 
 	copy_uboot_to_ram();
 
