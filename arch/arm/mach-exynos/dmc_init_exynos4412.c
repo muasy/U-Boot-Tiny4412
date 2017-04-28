@@ -233,4 +233,28 @@ void mem_ctrl_init(int reset)
 	dmc = (struct exynos4_dmc *)(samsung_get_base_dmc_ctrl()
 					+ DMC_OFFSET);
 	dmc_init(dmc);
+
+	printascii("[SPL] DDR3 SDRAM测试：\n");
+	writel(0x11221122, 0x40000000);
+	printhex8(readl(0x40000000));
+	printascii("\n");
+	
+	writel(0x22332233, 0x50000000);
+	printhex8(readl(0x50000000));
+	printascii("\n");
+	
+	writel(0x33443344, 0x60000000);
+	printhex8(readl(0x60000000));
+	printascii("\n");
+	
+	writel(0x44554455, 0x70000000);
+	printhex8(readl(0x70000000));
+	printascii("\n");
+
+	writel(0x55665566, 0x79000000);
+	printhex8(readl(0x79000000));
+	printascii("\n");
+
+	printascii("测试结束\n");
+	
 }

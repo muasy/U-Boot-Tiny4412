@@ -470,7 +470,7 @@ struct mem_timings {
 #define CTRL_ZQ_MODE_NOTERM	(0x1 << 0)
 #define CTRL_ZQ_START		(0x1 << 1)
 #define CTRL_ZQ_DIV		(0 << 4)
-#define CTRL_ZQ_MODE_DDS	(0x7 << 8)
+#define CTRL_ZQ_MODE_DDS	(0x4 << 8)
 #define CTRL_ZQ_MODE_TERM	(0x1 << 11)
 #define CTRL_ZQ_FORCE_IMPN	(0x5 << 14)
 #define CTRL_ZQ_FORCE_IMPP	(0x2 << 17)
@@ -506,7 +506,7 @@ struct mem_timings {
 #define ADD_LAT_PALL		(1 << 6)
 #define MEM_TYPE_DDR3		(0x6 << 8)
 #define MEM_WIDTH_32		(0x2 << 12)
-#define NUM_CHIP_2		(1 << 16)
+#define NUM_CHIP_2		(0 << 16)
 #define BL_8			(0x3 << 20)
 #define MEMCONTROL_VAL		(CLK_STOP_DISABLE | DPWRDN_DISABLE\
 				| DPWRDN_TYPE | TP_DISABLE | DSREF_DIABLE\

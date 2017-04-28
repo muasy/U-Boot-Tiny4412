@@ -294,10 +294,6 @@ void board_init_f(unsigned long bootflag)
 	if (do_lowlevel_init())
 		power_exit_wakeup();
 
-	printascii("[SPL] 测试：\n");
-	writel(123, 0x43E00000);
-	printhex8(readl(0x43E00000));
-
 	copy_uboot_to_ram();
 
 	/* Jump to U-Boot image */
