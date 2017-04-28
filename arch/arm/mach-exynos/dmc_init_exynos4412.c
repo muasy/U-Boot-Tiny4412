@@ -125,6 +125,10 @@ static void dmc_init(struct exynos4_dmc *dmc)
 	writel(mem.memconfig0, &dmc->memconfig0);
 	writel(mem.memconfig1, &dmc->memconfig1);
 
+#ifdef CONFIG_TINY4412
+	writel(0x8000001f, &dmc->ivcontrol);
+#endif	
+
 	/* Config Precharge Policy */
 	writel(mem.prechconfig, &dmc->prechconfig);
 	/*
@@ -208,7 +212,8 @@ void mem_ctrl_init(int reset)
 		#endif
 	#endif
 #endif
-
+	
+	printascii("[SPL] DDR3 SDRAM配置：\n");
 	printascii("timingref   ");  printhex8(mem.timingref); 		printascii("\n");
 	printascii("timingrow   ");  printhex8(mem.timingrow); 		printascii("\n");
 	printascii("timingdata  ");  printhex8(mem.timingdata); 	printascii("\n");
@@ -233,28 +238,48 @@ void mem_ctrl_init(int reset)
 	dmc = (struct exynos4_dmc *)(samsung_get_base_dmc_ctrl()
 					+ DMC_OFFSET);
 	dmc_init(dmc);
-
+	
+{
 	printascii("[SPL] DDR3 SDRAM测试：\n");
-	writel(0x11221122, 0x40000000);
-	printhex8(readl(0x40000000));
-	printascii("\n");
 	
-	writel(0x22332233, 0x50000000);
-	printhex8(readl(0x50000000));
-	printascii("\n");
-	
-	writel(0x33443344, 0x60000000);
-	printhex8(readl(0x60000000));
-	printascii("\n");
-	
-	writel(0x44554455, 0x70000000);
-	printhex8(readl(0x70000000));
-	printascii("\n");
+	void Test_SDRAM(unsigned long addr, unsigned long value);
+	Test_SDRAM(0x40000000, 0x12121212);
+	Test_SDRAM(0x40000004, 0x12121213);
+	Test_SDRAM(0x40000008, 0x12121214);
+	Test_SDRAM(0x4000000C, 0x12121215);
+	Test_SDRAM(0x40000010, 0x12121216);
 
-	writel(0x55665566, 0x79000000);
-	printhex8(readl(0x79000000));
-	printascii("\n");
-
+	Test_SDRAM(0x41000000, 0x23232325);
+	Test_SDRAM(0x42000000, 0x23232326);
+		
+	Test_SDRAM(0x42345530, 0x23232323);
+	Test_SDRAM(0x42345534, 0x23232324);
+	Test_SDRAM(0x42345538, 0x23232325);
+	Test_SDRAM(0x4234553C, 0x23232326);
+	Test_SDRAM(0x50000000, 0x34343434);
+	Test_SDRAM(0x58494940, 0x45454545);
+	Test_SDRAM(0x60000008, 0x56565656);
+	Test_SDRAM(0x6FFFFFFC, 0x67676767);
+	Test_SDRAM(0x70000000, 0x78787878);
+	Test_SDRAM(0x7FFFFFFC, 0x89898989);
+	
 	printascii("测试结束\n");
-	
+}	
 }
+
+void Test_SDRAM(unsigned long addr, unsigned long value)
+{
+	
+	printascii("写入地址 = ");
+	printhex8(addr);
+	
+	printascii("  写入值 = ");
+	printhex8(value);
+	writel(value, addr);
+	
+	printascii("  读取值 = ");
+	printhex8(readl(addr));
+	printascii("\n");
+}
+
+
