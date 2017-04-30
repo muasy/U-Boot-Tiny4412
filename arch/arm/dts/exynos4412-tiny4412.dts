@@ -23,8 +23,5 @@
 		console = "/serial@13800000";
 	};
 
-	serial0:serial@13810000 {
-		status = "okay";
-	};
 
 };

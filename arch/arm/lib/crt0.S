@@ -94,8 +94,13 @@ ENTRY(_main)
 
 	bl led_on_3
 
+	bl bsp_delay
+	bl led_off_all
+
 	mov	r0, #0
 	bl	board_init_f
+
+	bl led_on_1
 
 #if ! defined(CONFIG_SPL_BUILD)
 
