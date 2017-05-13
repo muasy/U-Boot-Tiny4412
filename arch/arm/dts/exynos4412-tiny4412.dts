@@ -27,7 +27,7 @@
 		mmc1 = "/dwmmc@12550000";
 	};
 
-	serial0:serial@13800000 {
+	serial@13800000 {
 		compatible = "samsung,exynos4210-uart";
 		status = "okay";
 	};
@@ -62,7 +62,7 @@
 		status = "disabled";
 	};
 
-	mmc2:sdhci@12530000 {
+	sdhci@12530000 {
 		compatible = "samsung,exynos4412-sdhci";
 		samsung,bus-width = <4>;
 		samsung,timing = <1 2 3>;
