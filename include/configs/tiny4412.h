@@ -17,10 +17,13 @@
 
 /* DEBUG UART */
 #if ! defined(CONFIG_SPL_BUILD)
-	/* U-BOOT阶段调试输出 */
-	#define DEBUG
+#if 0
+	/* U-BOOT DEBUG */
+	#define DEBUG 
+#endif
 #else
-	/* SPL阶段调试输出 */
+#if 0
+	/* SPL DEBUG */
 	#define CONFIG_DEBUG_UART			1 
 	#define CONFIG_SPL_SERIAL_SUPPORT	1
 	#define CONFIG_SPL_GPIO_SUPPORT		1
@@ -28,6 +31,10 @@
 	#define CONFIG_DEBUG_UART_BASE		0x13800000
 	#define CONFIG_DEBUG_UART_CLOCK		(100000000)
 #endif
+#endif
+
+/* MMC CONFIG  */
+#define CONFIG_BLK					1
 
 #define CONFIG_SYS_DCACHE_OFF		1
 
@@ -132,6 +139,5 @@
 #define BL2_START_OFFSET	((CONFIG_ENV_OFFSET + CONFIG_ENV_SIZE)/512)
 #define BL2_SIZE_BLOC_COUNT	(COPY_BL2_SIZE/512)
 #endif	/* __CONFIG_H */
-
 
 

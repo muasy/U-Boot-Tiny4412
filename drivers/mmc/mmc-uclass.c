@@ -173,6 +173,7 @@ void print_mmc_devices(char separator)
 			if (separator != '\n')
 				puts(" ");
 		}
+
 		if (m->has_init)
 			mmc_type = IS_SD(m) ? "SD" : "eMMC";
 		else

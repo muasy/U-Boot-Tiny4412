@@ -234,7 +234,6 @@ int exynos_mmc_init(const void *blob)
 	count = fdtdec_find_aliases_for_id(blob, "mmc",
 			COMPAT_SAMSUNG_EXYNOS_MMC, node_list,
 			SDHCI_MAX_HOSTS);
-
 	return process_nodes(blob, node_list, count);
 }
 #endif

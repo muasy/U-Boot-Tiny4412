@@ -126,7 +126,6 @@ static int board_uart_init(void)
 {
 #ifndef CONFIG_PINCTRL_EXYNOS
 	int err, uart_id, ret = 0;
-
 	for (uart_id = PERIPH_ID_UART0; uart_id <= PERIPH_ID_UART3; uart_id++) {
 		err = exynos_pinmux_config(uart_id, PINMUX_FLAG_NONE);
 		if (err) {

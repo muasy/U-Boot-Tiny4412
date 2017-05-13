@@ -1837,6 +1837,7 @@ int mmc_initialize(bd_t *bis)
 	mmc_list_init();
 #endif
 #endif
+
 	ret = mmc_probe(bis);
 	if (ret)
 		return ret;

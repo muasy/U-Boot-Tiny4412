@@ -703,7 +703,6 @@ static void console_update_silent(void)
 int console_init_f(void)
 {
 	gd->have_console = 1;
-
 	console_update_silent();
 
 	print_pre_console_buffer(PRE_CONSOLE_FLUSHPOINT1_SERIAL);
