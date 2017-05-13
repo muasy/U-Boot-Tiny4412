@@ -487,6 +487,7 @@ static int initr_env(void)
 		env_relocate();
 	else
 		set_default_env(NULL);
+
 #ifdef CONFIG_OF_CONTROL
 	setenv_addr("fdtcontroladdr", gd->fdt_blob);
 #endif
