@@ -2,7 +2,7 @@
 
 #EXEC="sd_fusing.sh"
 EXEC="fast_fusing.sh"
-SD_PATH="/dev/sdb"
+SD_PATH="/dev/sdd"
 FUSE_PATH="./${EXEC}"
 
 if [ -e ${FUSE_PATH} ]

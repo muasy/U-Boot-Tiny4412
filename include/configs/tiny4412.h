@@ -15,6 +15,7 @@
 #define CONFIG_EXYNOS4412		    1	 /* which is a EXYNOS4412 SoC */
 #define CONFIG_TINY4412	         	1	 /* working with TINY4412 */
 
+
 /* DEBUG UART */
 #if ! defined(CONFIG_SPL_BUILD)
 #if 0

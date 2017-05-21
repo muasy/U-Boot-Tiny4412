@@ -37,6 +37,7 @@ static int gpio_to_device(unsigned int gpio, struct gpio_desc *desc)
 	     dev;
 	     ret = uclass_next_device(&dev)) {
 		uc_priv = dev_get_uclass_priv(dev);
+		
 		if (gpio >= uc_priv->gpio_base &&
 		    gpio < uc_priv->gpio_base + uc_priv->gpio_count) {
 			desc->dev = dev;
@@ -199,11 +200,9 @@ int gpio_request(unsigned gpio, const char *label)
 {
 	struct gpio_desc desc;
 	int ret;
-
 	ret = gpio_to_device(gpio, &desc);
 	if (ret)
 		return ret;
-
 	return dm_gpio_request(&desc, label);
 }
 

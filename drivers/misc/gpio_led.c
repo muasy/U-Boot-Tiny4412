@@ -10,7 +10,7 @@
 #include <asm/gpio.h>
 
 #ifndef CONFIG_GPIO_LED_INVERTED_TABLE
-#define CONFIG_GPIO_LED_INVERTED_TABLE {}
+#define CONFIG_GPIO_LED_INVERTED_TABLE {248, 249, 250, 251}
 #endif
 
 static led_id_t gpio_led_inv[] = CONFIG_GPIO_LED_INVERTED_TABLE;
@@ -35,7 +35,6 @@ void __led_init(led_id_t mask, int state)
 		printf("%s: failed requesting GPIO%lu!\n", __func__, mask);
 		return;
 	}
-
 	gpio_value = gpio_led_gpio_value(mask, state);
 	gpio_direction_output(mask, gpio_value);
 }
