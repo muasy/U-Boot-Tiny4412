@@ -39,9 +39,9 @@
 
 /* USB */
 #define CONFIG_USB_EHCI_EXYNOS		1
-/*
+
+/* USB-KEYBOARD */
 #define CONFIG_SYS_STDIO_DEREGISTER 1 
-*/
 
 #define CONFIG_SYS_DCACHE_OFF		1
 
