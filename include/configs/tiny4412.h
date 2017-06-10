@@ -18,7 +18,7 @@
 
 /* DEBUG UART */
 #if ! defined(CONFIG_SPL_BUILD)
-#if 1
+#if 0
 	/* U-BOOT DEBUG */
 	#define DEBUG 
 #endif
