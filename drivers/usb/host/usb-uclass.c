@@ -219,6 +219,28 @@ static void remove_inactive_children(struct uclass *uc, struct udevice *bus)
 	}
 }
 
+#include <asm/gpio.h>
+void usb_phy_reset(void)
+{
+	struct gpio_desc gpio = {};
+	int node;
+
+	node = fdt_node_offset_by_compatible(gd->fdt_blob, 0,
+			"smsc,usb-phy-reset");
+	if (node < 0)
+		return;
+
+	gpio_request_by_name_nodev(gd->fdt_blob, node, "reset-gpio", 0, &gpio,
+				   GPIOD_IS_OUT);
+
+	if (dm_gpio_is_valid(&gpio)) {
+		dm_gpio_set_value(&gpio, 1);
+		mdelay(50);
+		dm_gpio_set_value(&gpio, 0);
+		dm_gpio_free(gpio.dev, &gpio);
+	}
+}
+
 int usb_init(void)
 {
 	int controllers_initialized = 0;
@@ -231,6 +253,7 @@ int usb_init(void)
 
 	asynch_allowed = 1;
 	usb_hub_reset();
+	usb_phy_reset();
 
 	ret = uclass_get(UCLASS_USB, &uc);
 	if (ret)
@@ -242,6 +265,7 @@ int usb_init(void)
 		/* init low_level USB */
 		printf("USB%d:   ", count);
 		count++;
+	
 		ret = device_probe(bus);
 		if (ret == -ENODEV) {	/* No such device. */
 			puts("Port not available.\n");

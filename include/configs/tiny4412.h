@@ -18,7 +18,7 @@
 
 /* DEBUG UART */
 #if ! defined(CONFIG_SPL_BUILD)
-#if 0
+#if 1
 	/* U-BOOT DEBUG */
 	#define DEBUG 
 #endif
@@ -36,6 +36,12 @@
 
 /* MMC CONFIG  */
 #define CONFIG_BLK					1
+
+/* USB */
+#define CONFIG_USB_EHCI_EXYNOS		1
+/*
+#define CONFIG_SYS_STDIO_DEREGISTER 1 
+*/
 
 #define CONFIG_SYS_DCACHE_OFF		1
 

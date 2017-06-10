@@ -497,6 +497,11 @@ config CMD_GPIO
 	help
 	  GPIO support.
 
+config CMD_BEEP
+	bool "beep"
+	help
+	  BEEP support.
+
 endmenu
 
 

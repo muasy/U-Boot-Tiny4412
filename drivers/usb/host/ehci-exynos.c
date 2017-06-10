@@ -145,7 +145,7 @@ static void exynos5_setup_usb_phy(struct exynos_usb_phy *usb)
 static void exynos4412_setup_usb_phy(struct exynos4412_usb_phy *usb)
 {
 	writel(CLK_24MHZ, &usb->usbphyclk);
-
+	
 	clrbits_le32(&usb->usbphyctrl, (PHYPWR_NORMAL_MASK_HSIC0 |
 		PHYPWR_NORMAL_MASK_HSIC1 | PHYPWR_NORMAL_MASK_PHY1 |
 		PHYPWR_NORMAL_MASK_PHY0));
@@ -225,6 +225,7 @@ static int ehci_usb_probe(struct udevice *dev)
 		dm_gpio_set_value(&plat->vbus_gpio, 1);
 
 	setup_usb_phy(ctx->usb);
+	mdelay(1);	//By.SY
 	hcor = (struct ehci_hcor *)((uint32_t)ctx->hcd +
 			HC_LENGTH(ehci_readl(&ctx->hcd->cr_capbase)));
 

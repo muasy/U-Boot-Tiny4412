@@ -683,7 +683,6 @@ static unsigned long exynos4x12_get_pwm_clk(void)
 
 	sclk = get_pll_clk(MPLL);
 	ratio = 8;
-
 	pclk = sclk / (ratio + 1);
 
 	return pclk;

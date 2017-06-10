@@ -9,6 +9,8 @@
 
 /dts-v1/;
 #include "exynos4412.dtsi"
+#include <dt-bindings/gpio/gpio.h>
+
 
 / {
 	model = "Tiny4412 based on Exynos4412";
@@ -19,7 +21,20 @@
 		stdout-path = "serial0";
 	};
 
+	memory {
+		reg = <0x40000000 0x80000000>;
+	};
+
 	aliases {
+		i2c0 = "/i2c@13860000";
+		i2c1 = "/i2c@13870000";
+		i2c2 = "/i2c@13880000";
+		i2c3 = "/i2c@13890000";
+		i2c4 = "/i2c@138a0000";
+		i2c5 = "/i2c@138b0000";
+		i2c6 = "/i2c@138c0000";
+		i2c7 = "/i2c@138d0000";
+
 		serial0 = "/serial@13800000";
 		console = "/serial@13800000";
 		
@@ -85,6 +100,36 @@
 		bus_hz = <400000000>;
 		div = <0x3>;
 		index = <4>;
+	};
+
+	emmc-reset {
+		compatible = "samsung,emmc-reset";
+		reset-gpio = <&gpx1 1 GPIO_ACTIVE_LOW>;
+	};
+
+	pwm@139D0000 {
+		compatible = "samsung,exynos4210-pwm";
+		reg = <0x139D0000 0x100>;
+		samsung,pwm-outputs = <0>,<1>;
+		#pwm-cells = <3>;
+		enable-gpios = <&gpd0 0 GPIO_ACTIVE_HIGH>;
+	}; 
+	
+	ehci@12580000 {
+		compatible = "samsung,exynos-ehci";
+		reg = <0x12580000 0x100>;		
+		
+		#address-cells = <1>;
+		#size-cells = <1>;
+		phy {
+			compatible = "samsung,exynos-usb-phy";
+			reg = <0x125B0000 0x100>;
+		};
+	};
+	
+	usb-phy-reset {
+		compatible = "smsc,usb-phy-reset";
+		reset-gpio = <&gpm2 4 GPIO_ACTIVE_LOW>;
 	};
 };
 
