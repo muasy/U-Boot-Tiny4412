@@ -39,7 +39,6 @@ static int do_dfu(cmd_tbl_t *cmdtp, int flag, int argc, char * const argv[])
 		return update_tftp(addr, interface, devstring);
 	}
 #endif
-
 	ret = dfu_init_env_entities(interface, devstring);
 	if (ret)
 		goto done;

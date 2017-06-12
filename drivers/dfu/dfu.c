@@ -122,7 +122,6 @@ static char *dfu_get_hash_algo(void)
 	s = getenv("dfu_hash_algo");
 	if (!s)
 		return NULL;
-
 	if (!strcmp(s, "crc32")) {
 		debug("%s: DFU hash method: %s\n", __func__, s);
 		return s;
