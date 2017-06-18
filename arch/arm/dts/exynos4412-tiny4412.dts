@@ -111,8 +111,6 @@
 		compatible = "samsung,exynos4210-pwm";
 		reg = <0x139D0000 0x100>;
 		samsung,pwm-outputs = <0>,<1>;
-		#pwm-cells = <3>;
-		enable-gpios = <&gpd0 0 GPIO_ACTIVE_HIGH>;
 	}; 
 	
 	ehci@12580000 {

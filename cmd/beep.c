@@ -34,35 +34,16 @@ static int do_beep(cmd_tbl_t *cmdtp, int flag, int argc, char * const argv[])
 		return cmd_process_error(cmdtp, ret);
 	}
 
+	pwm_set_enable(dev, channel, false);
 	ret = pwm_set_config(dev, channel, period_ns, duty_ns);
 	if (ret) {
 		return cmd_process_error(cmdtp, ret);
 	}
-
+	
 	if (period_ns) {
 		enable = true;	
 	}
 	ret = pwm_set_enable(dev, channel, true);
-	if (ret) {
-		return cmd_process_error(cmdtp, ret);
-	}
-
-#if 0
-{
-	struct gpio_desc gpio;
-	ret = gpio_request_by_name(dev, "enable-gpios", 0, &gpio,
-				   GPIOD_IS_OUT);
-	if (ret) {
-		printf("%s: Warning: cannot get enable GPIO: ret=%d\n",
-		      __func__, ret);
-		if (ret != -ENOENT)
-			return ret;
-	}
-	
-	mdelay(10);
-	dm_gpio_set_value(&gpio, 1);
-}
-#endif
 
 	return cmd_process_error(cmdtp, ret);
 }
