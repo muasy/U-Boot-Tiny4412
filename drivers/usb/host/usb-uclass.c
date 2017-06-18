@@ -235,9 +235,10 @@ void usb_phy_reset(void)
 
 	if (dm_gpio_is_valid(&gpio)) {
 		dm_gpio_set_value(&gpio, 1);
-		mdelay(50);
+		mdelay(100);
 		dm_gpio_set_value(&gpio, 0);
 		dm_gpio_free(gpio.dev, &gpio);
+		mdelay(100);
 	}
 }
 
@@ -253,7 +254,6 @@ int usb_init(void)
 
 	asynch_allowed = 1;
 	usb_hub_reset();
-	usb_phy_reset();
 
 	ret = uclass_get(UCLASS_USB, &uc);
 	if (ret)

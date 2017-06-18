@@ -29,7 +29,7 @@ u32 get_board_rev(void)
 
 static void board_gpio_init(void)
 {
-	;
+	gpio_request(EXYNOS4X12_GPIO_M24, "USB4604 Reset");
 }
 
 int exynos_init(void)
@@ -56,7 +56,8 @@ struct dwc2_plat_otg_data s5pc210_otg_data = {
 
 int board_usb_init(int index, enum usb_init_type init)
 {
-	debug("USB_udc_probe\n");
+	gpio_direction_output(EXYNOS4X12_GPIO_M24, 0);
+   	gpio_direction_output(EXYNOS4X12_GPIO_M24, 1);
 	
 	return dwc2_udc_probe(&s5pc210_otg_data);
 }
