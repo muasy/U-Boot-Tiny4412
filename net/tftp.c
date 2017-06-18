@@ -733,7 +733,6 @@ void tftp_start(enum proto_t protocol)
 
 	debug("TFTP blocksize = %i, timeout = %ld ms\n",
 	      tftp_block_size_option, timeout_ms);
-
 	tftp_remote_ip = net_server_ip;
 	if (net_boot_file_name[0] == '\0') {
 		sprintf(default_filename, "%02X%02X%02X%02X.img",

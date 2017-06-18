@@ -31,7 +31,7 @@
  http://ptm2.cc.utu.fi/ftp/network/cards/DM9601/From_NET/DM9601-DS-P01-930914.pdf
 */
 
-#define DM9601_BASE_NAME "Davicom DM96xx USB 10/100 Ethernet"
+#define DM9601_BASE_NAME "DM9621A"
 
 struct dm_dongle {
    unsigned short vendor;
@@ -220,7 +220,9 @@ static int dm_write_shared_word(struct ueth_data *dev, int phy, u8 reg, __le16 v
        goto out;
 
    dm_write_reg(dev, DM_SHARED_ADDR, phy ? (reg | 0x40) : reg);
-   dm_write_reg(dev, DM_SHARED_CTRL, phy ? 0x1a : 0x12);
+   if (!phy) dm_write_reg(dev, DM_SHARED_CTRL, 0x10);
+   dm_write_reg(dev, DM_SHARED_CTRL, phy ? 0x0a : 0x12);
+   dm_write_reg(dev, DM_SHARED_CTRL, 0x10);
 
    for (i = 0; i < DM_TIMEOUT; i++) {
        u8 tmp = 0;
@@ -285,14 +287,9 @@ static int dm9601_get_eeprom(struct net_device *net,
 
 static int dm9601_mdio_read(struct ueth_data *dev, int phy_id, int loc)
 {
-   ALLOC_CACHE_ALIGN_BUFFER(__le16, v, 1);
+   ALLOC_CACHE_ALIGN_BUFFER(__le16, v, 2);
 
-   if (phy_id) {
-       printf("Only internal phy supported\n");
-       return 0;
-   }
-
-   dm_read_shared_word(dev, 1, loc, v);
+   dm_read_shared_word(dev, phy_id, loc, v);
 
    debug("dm9601_mdio_read() phy_id=0x%02x, loc=0x%02x, returns=0x%04x|0x%04x\n",
          phy_id, loc, *v, le16_to_cpu(*v));
@@ -305,16 +302,15 @@ static int dm9601_mdio_write(struct ueth_data *dev, int phy_id, int loc,
                  int val)
 {
    __le16 res = cpu_to_le16(val);
-
-   if (phy_id) {
-       printf("Only internal phy supported\n");
-       return -EINVAL;
-   }
+  int mdio_val;
 
    debug("dm9601_mdio_write() phy_id=0x%02x, loc=0x%02x, val=0x%04x|0x%04x\n",
           phy_id, loc, res, val);
 
-   return dm_write_shared_word(dev, 1, loc, res);
+   dm_write_shared_word(dev, phy_id, loc, res);
+   mdelay(1);
+   mdio_val = dm9601_mdio_read(dev, phy_id, loc);
+   return mdio_val;
 }
 
 

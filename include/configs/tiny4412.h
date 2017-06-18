@@ -47,6 +47,9 @@
 #define CONFIG_USB_HOST_ETHER		1
 #define CONFIG_USB_ETHER_DM9621		1
 
+/* BOOTP */
+#define CONFIG_BOOTP_SERVERIP		1
+
 #define CONFIG_SYS_DCACHE_OFF		1
 
 /* ORIGEN has 4 bank of DRAM */
