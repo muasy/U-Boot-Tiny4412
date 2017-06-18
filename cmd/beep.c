@@ -35,6 +35,10 @@ static int do_beep(cmd_tbl_t *cmdtp, int flag, int argc, char * const argv[])
 	}
 
 	pwm_set_enable(dev, channel, false);
+	
+	gpio_set_pull(EXYNOS4X12_GPIO_D00, S5P_GPIO_PULL_NONE);
+	gpio_cfg_pin(EXYNOS4X12_GPIO_D00, S5P_GPIO_FUNC(0x2));
+
 	ret = pwm_set_config(dev, channel, period_ns, duty_ns);
 	if (ret) {
 		return cmd_process_error(cmdtp, ret);

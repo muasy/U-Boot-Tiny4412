@@ -31,10 +31,6 @@ static void board_gpio_init(void)
 {
 	/* USB复位 */
 	gpio_request(EXYNOS4X12_GPIO_M24, "USB4604 Reset");
-
-	/* BEEP蜂鸣器 */
-	gpio_set_pull(EXYNOS4X12_GPIO_D00, S5P_GPIO_PULL_NONE);
-	gpio_cfg_pin(EXYNOS4X12_GPIO_D00, S5P_GPIO_FUNC(0x2));
 }
 
 int exynos_init(void)
