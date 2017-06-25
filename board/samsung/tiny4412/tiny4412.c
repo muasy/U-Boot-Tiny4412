@@ -31,6 +31,13 @@ static void board_gpio_init(void)
 {
 	/* USB复位 */
 	gpio_request(EXYNOS4X12_GPIO_M24, "USB4604 Reset");
+
+	/* KEY */
+	gpio_request(EXYNOS4X12_GPIO_X32, "KEY 1");
+	gpio_request(EXYNOS4X12_GPIO_X33, "KEY 2");
+	gpio_request(EXYNOS4X12_GPIO_X34, "KEY 3");
+	gpio_request(EXYNOS4X12_GPIO_X35, "KEY 4");
+	
 }
 
 int exynos_init(void)

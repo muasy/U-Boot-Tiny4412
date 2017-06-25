@@ -38,8 +38,9 @@
 		serial0 = "/serial@13800000";
 		console = "/serial@13800000";
 		
-		mmc0 = "/sdhci@12530000";
-		mmc1 = "/dwmmc@12550000";
+		mmc2 = "/sdhci@12530000";
+		mmc4 = "/dwmmc@12550000";
+
 	};
 
 	serial@13800000 {

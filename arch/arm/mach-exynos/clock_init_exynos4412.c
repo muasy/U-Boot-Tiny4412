@@ -548,3 +548,14 @@ void system_clock_init(void)
    while (readl(&clk->mux_stat_cpu) & MUX_STAT_CPU_CHANGING)
        continue;
 }
+
+/*
+ * Set clock divisor value for booting from EMMC.
+ * Set DWMMC channel-0 clk div to operate mmc0 device at 50MHz.
+ */
+void emmc_boot_clk_div_set(void)
+{
+	; //clock already setting!
+}
+
+

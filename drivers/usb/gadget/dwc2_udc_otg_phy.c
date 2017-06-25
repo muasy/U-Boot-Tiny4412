@@ -67,7 +67,6 @@ void otg_phy_init(struct dwc2_udc *dev)
 	else
 		writel((readl(&phy->phyclk) & ~(ID_PULLUP0 | COMMON_ON_N0)) |
 		       CLK_SEL_24MHZ, &phy->phyclk); /* PLL 24Mhz */
-
 	writel((readl(&phy->rstcon) &~(LINK_SW_RST | PHYLNK_SW_RST))
 	       | PHY_SW_RST0, &phy->rstcon);
 	udelay(10);

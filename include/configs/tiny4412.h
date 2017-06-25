@@ -14,7 +14,7 @@
 /* High Level Configuration Options */
 #define CONFIG_EXYNOS4412		    1	 /* which is a EXYNOS4412 SoC */
 #define CONFIG_TINY4412	         	1	 /* working with TINY4412 */
-
+#define CONFIG_SUPPORT_EMMC_BOOT	1 	 /* support u-boot in eMMC */
 
 /* DEBUG UART */
 #if ! defined(CONFIG_SPL_BUILD)
@@ -126,22 +126,23 @@
 
 /*
  *    SD MMC layout:
- *    +------------+------------------------------------------------------------+
- *    |                                                                         |
- *    |            |            |               |              |                |
- *    |   512B     |   8K(bl1)  |    16k(bl2)   |   16k(ENV)   |  512k(u-boot)  |
- *    |            |            |               |              |                |
- *    |                                                                         |
- *    +------------+------------------------------------------------------------+
+ *    +------------------------------------------------------------------------------------------+
+ *    |                                                                                          |
+ *    |            |            |               |              |                |                |
+ *    |   512B     |   8K(bl1)  |    16k(bl2)   |  1M(u-boot)  |    92k(TZSW)   |    16K(ENV)    |
+ *    |            |            |               |              |                |                |
+ *    |                                                                                          |
+ *    +------------------------------------------------------------------------------------------+
  *
  */
 #define CONFIG_ENV_IS_IN_MMC
-#define CONFIG_SYS_MMC_ENV_DEV	0
+#define CONFIG_SYS_MMC_ENV_DEV	(4)			/* Need match dts of mmc id */
 #define CONFIG_ENV_SIZE			(16 << 10)	/* 16 KB */
 #define RESERVE_BLOCK_SIZE		(512)
 #define BL1_SIZE				(8 << 10) 	/* 8K reserved for BL1*/
 #define BL2_SIZE				(16 << 10)	/* 16K reserved for BL2 */
-#define CONFIG_ENV_OFFSET		(RESERVE_BLOCK_SIZE + BL1_SIZE + BL2_SIZE)
+#define TZSW_SIZE				(92 << 10)	/* 92K tzsw size */
+#define CONFIG_ENV_OFFSET		(RESERVE_BLOCK_SIZE + BL1_SIZE + BL2_SIZE + COPY_BL2_SIZE + TZSW_SIZE)
 
 #define CONFIG_SPL_LDSCRIPT	"board/samsung/common/exynos-uboot-spl.lds"
 #define CONFIG_SPL_MAX_FOOTPRINT	(14 * 1024)
@@ -150,7 +151,7 @@
 
 /* U-Boot copy size from boot Media to DRAM.*/
 #define COPY_BL2_SIZE		0x100000
-#define BL2_START_OFFSET	((CONFIG_ENV_OFFSET + CONFIG_ENV_SIZE)/512)
+#define BL2_START_OFFSET	((RESERVE_BLOCK_SIZE + BL1_SIZE + BL2_SIZE)/512)
 #define BL2_SIZE_BLOC_COUNT	(COPY_BL2_SIZE/512)
 #endif	/* __CONFIG_H */
 
