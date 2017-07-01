@@ -20,7 +20,7 @@ static int do_beep(cmd_tbl_t *cmdtp, int flag, int argc, char * const argv[])
 	uint duty_ns;
 	struct udevice *dev;
 	int ret;
-	bool enable = false;
+	bool enable;
 
 	if (argc < 4) {
 		return CMD_RET_USAGE;	
@@ -44,10 +44,8 @@ static int do_beep(cmd_tbl_t *cmdtp, int flag, int argc, char * const argv[])
 		return cmd_process_error(cmdtp, ret);
 	}
 	
-	if (period_ns) {
-		enable = true;	
-	}
-	ret = pwm_set_enable(dev, channel, true);
+	enable = (period_ns) ? true : false;
+	ret = pwm_set_enable(dev, channel, enable);
 
 	return cmd_process_error(cmdtp, ret);
 }
