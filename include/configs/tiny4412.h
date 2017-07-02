@@ -90,9 +90,9 @@
 #define CONFIG_SPL_TEXT_BASE	0x02023400
 
 #define CONFIG_EXTRA_ENV_SETTINGS \
-	"loadaddr=0x40007000\0" \
+	"loadaddr=0x40008000\0" \
 	"rdaddr=0x48000000\0" \
-	"kerneladdr=0x40007000\0" \
+	"kerneladdr=0x40008000\0" \
 	"ramdiskaddr=0x48000000\0" \
 	"console=ttySAC0,115200n8\0" \
 	"mmcdev=0\0" \
