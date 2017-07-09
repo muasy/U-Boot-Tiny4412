@@ -17,12 +17,7 @@
 	compatible = "samsung,tiny4412", "samsung,exynos4412";
 
 	chosen {
-		bootargs = "";
 		stdout-path = "serial0";
-	};
-
-	memory {
-		reg = <0x40000000 0x80000000>;
 	};
 
 	aliases {
