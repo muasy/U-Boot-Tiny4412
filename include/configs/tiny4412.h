@@ -135,10 +135,17 @@
  *    +------------------------------------------------------------------------------------------+
  *
  */
+#if (0)
+	#define CONFIG_SYS_MMC_ENV_DEV	(2)			/* Need match dts of mmc id */
+	#define RESERVE_BLOCK_SIZE		(512)
+#else
+	#define CONFIG_SYS_MMC_ENV_DEV	(4)			/* Need match dts of mmc id */
+	#define RESERVE_BLOCK_SIZE		(0)
+#endif
+
+
 #define CONFIG_ENV_IS_IN_MMC
-#define CONFIG_SYS_MMC_ENV_DEV	(4)			/* Need match dts of mmc id */
 #define CONFIG_ENV_SIZE			(16 << 10)	/* 16 KB */
-#define RESERVE_BLOCK_SIZE		(512)
 #define BL1_SIZE				(8 << 10) 	/* 8K reserved for BL1*/
 #define BL2_SIZE				(16 << 10)	/* 16K reserved for BL2 */
 #define TZSW_SIZE				(92 << 10)	/* 92K tzsw size */
