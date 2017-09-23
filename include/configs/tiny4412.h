@@ -135,7 +135,7 @@
  *    +------------------------------------------------------------------------------------------+
  *
  */
-#if (0)
+#if (1)
 	#define CONFIG_SYS_MMC_ENV_DEV	(2)			/* Need match dts of mmc id */
 	#define RESERVE_BLOCK_SIZE		(512)
 #else
